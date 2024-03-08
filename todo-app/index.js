@@ -21,6 +21,15 @@ app.get("/getAllUsers", async (req, res) => {
 });
 
 // Get a user
+app.get("/getAllUsers/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    res.send({ message: `Get a single user at:${id}` });
+  } catch (error) {
+    res.json({ error: error.message });
+  }
+});
 // Post a user
 // Update a user
 // Delete a user
