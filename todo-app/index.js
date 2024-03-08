@@ -40,6 +40,15 @@ app.post("/getAllUsers", (req, res) => {
   }
 });
 // Update a user
+app.put("/getAllUsers/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    res.send({ message: `Update a single user at:${id}` });
+  } catch (error) {
+    res.json({ error: error.message });
+  }
+});
 // Delete a user
 
 app.listen(PORT, () => {
