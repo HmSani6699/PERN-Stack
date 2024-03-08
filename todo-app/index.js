@@ -50,6 +50,15 @@ app.put("/getAllUsers/:id", async (req, res) => {
   }
 });
 // Delete a user
+app.delete("/getAllUsers/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    res.send({ message: `Delete a single user at:${id}` });
+  } catch (error) {
+    res.json({ error: error.message });
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running at https://localhost:${PORT} `);
