@@ -31,6 +31,14 @@ app.get("/getAllUsers/:id", async (req, res) => {
   }
 });
 // Post a user
+app.post("/getAllUsers", (req, res) => {
+  try {
+    const newUser = req.body;
+    res.send({ message: `Added user at:${newUser?.name}` });
+  } catch (error) {
+    res.json({ error: error.message });
+  }
+});
 // Update a user
 // Delete a user
 
