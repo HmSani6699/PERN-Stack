@@ -37,17 +37,16 @@ app.get("/getAllUsers/:id", async (req, res) => {
 app.post("/createUser", async (req, res) => {
   try {
     const { name, email, phone } = req.body;
-
+    const id = uuidv4();
     // Inserting user data in to database
-    const newUser = await pool.query("INSERT INTO users VALUES ($1, $2,$3)", [
-      name,
-      phone,
-      email,
-    ]);
+    const newUser = await pool.query(
+      "INSERT INTO users VALUES ($1, $2,$3,$4) RETURNING *",
+      [id, name, phone, email]
+    );
 
     res.status(200).json({
       message: `User as created`,
-      data: newUser,
+      data: newUser.rows,
     });
   } catch (error) {
     res.json({ error: error.message });
