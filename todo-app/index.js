@@ -29,7 +29,10 @@ app.get("/getAllUsers/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
-    res.send({ message: `Get a single user at:${id}` });
+    // get single data in to database
+    const getUser = await pool.query("SELECT * FROM users WHERE id =$1", [id]);
+
+    res.send({ message: `Get a single user`, data: getUser.rows });
   } catch (error) {
     res.json({ error: error.message });
   }
