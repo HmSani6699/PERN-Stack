@@ -59,22 +59,38 @@ app.post("/createUser", async (req, res) => {
 });
 
 // Update a user
-app.put("/getAllUsers/:id", async (req, res) => {
+app.put("/updateUser/:id", async (req, res) => {
   try {
     const { id } = req.params;
+    const { name, email, phone } = req.body;
+    console.log("234234=>", name, email, phone);
+    // updating user data in the database
+    const updateUser = await pool.query(
+      "UPDATE users SET name=$1, phone=$2, email=$3 WHERE id=$4",
+      [name, phone, email, id]
+    );
 
-    res.send({ message: `Update a single user at:${id}` });
+    res.send({
+      message: `Update a single user successfully!`,
+      data: updateUser.rows,
+    });
   } catch (error) {
     res.json({ error: error.message });
   }
 });
 
 // Delete a single user
-app.delete("/getAllUsers/:id", async (req, res) => {
+app.delete("/deleteUser/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
-    res.send({ message: `Delete a single user at:${id}` });
+    // Delete single user data in to database
+    const deleteUser = await pool.query("DELETE FROM users WHERE id=$1", [id]);
+
+    res.send({
+      message: `Delete a single user successfull !`,
+      data: deleteUser.rows,
+    });
   } catch (error) {
     res.json({ error: error.message });
   }
