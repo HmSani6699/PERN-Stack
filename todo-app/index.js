@@ -16,13 +16,15 @@ app.get("/", (req, res) => {
 // Get all user
 app.get("/getAllUsers", async (req, res) => {
   try {
-    res.send({ message: "Get all users" });
+    const getAllUsers = await pool.query("SELECT * FROM users");
+
+    res.send({ message: "Get all users", data: getAllUsers.rows });
   } catch (error) {
     res.json({ error: error.message });
   }
 });
 
-// Get a user
+// Get a single user
 app.get("/getAllUsers/:id", async (req, res) => {
   try {
     const { id } = req.params;
