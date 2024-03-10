@@ -2,6 +2,8 @@ const express = require("express");
 const app = express();
 const PORT = 5000;
 const cors = require("cors");
+const pool = require("./db");
+const { v4: uuidv4 } = require("uuid");
 
 // using the middleweare
 app.use(cors());
@@ -32,10 +34,21 @@ app.get("/getAllUsers/:id", async (req, res) => {
 });
 
 // Post a user
-app.post("/getAllUsers", (req, res) => {
+app.post("/createUser", async (req, res) => {
   try {
-    const newUser = req.body;
-    res.send({ message: `Added user at:${newUser?.name}` });
+    const { name, email, phone } = req.body;
+
+    // Inserting user data in to database
+    const newUser = await pool.query("INSERT INTO users VALUES ($1, $2,$3)", [
+      name,
+      phone,
+      email,
+    ]);
+
+    res.status(200).json({
+      message: `User as created`,
+      data: newUser,
+    });
   } catch (error) {
     res.json({ error: error.message });
   }
