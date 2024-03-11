@@ -5,15 +5,17 @@ import UserCard from "./component/UserCard";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Modal from "./component/Modal";
+import UserDetailsModal from "./component/UserDetailsModal";
 function App() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [details, seDetails] = useState("");
   const [allUsers, setAllUsers] = useState([]);
+  const [openUserDetailsModal, setopenUserDetailsModal] = useState(false);
+  const [userDetails, setUserDetails] = useState();
   const [openModal, setOpenModal] = useState(false);
   const [id, setId] = useState();
-
-  // console.log(name, phone, email);
 
   useEffect(() => {
     handleGetAllUsers();
@@ -25,22 +27,26 @@ function App() {
       name,
       email,
       phone,
+      description: details,
     };
 
-    axios
-      .post("http://localhost:5000/createUser", playload)
-      .then((response) => {
-        console.log(response);
-        setName("");
-        setEmail("");
-        setPhone("");
-        setAllUsers("");
-        handleGetAllUsers();
-        toast.success("User Create successfully!");
-      })
-      .catch((error) => {
-        console.log(error);
+    try {
+      axios.post("http://localhost:5000/createUser", playload).then((res) => {
+        console.log(res);
+        if (!res.data?.error) {
+          setName("");
+          setEmail("");
+          setPhone("");
+          setAllUsers("");
+          handleGetAllUsers();
+          toast.success("User Create successfully!");
+        } else {
+          toast.error(res?.data?.error);
+        }
       });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // Get all users
@@ -88,42 +94,62 @@ function App() {
     } catch (error) {}
   };
 
+  // get  a single  user
+  const handleGetUser = (id) => {
+    setopenUserDetailsModal(true);
+    try {
+      axios.get(`http://localhost:5000/getUser/${id}`).then((response) => {
+        setUserDetails(response?.data?.data[0]);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="max-w-6xl mx-auto relative">
       <h1 className="text-4xl font-bold text-center mt-6 mb-10">
         Simple Todo App
       </h1>
 
-      <div className="flex items-center gap-4">
-        <div className="w-[90%] grid grid-cols-1 md:grid-clos-2 lg:grid-cols-3 gap-4 ">
-          <InputField
-            title="Name"
-            value={name}
-            setValue={setName}
-            type="text"
-            placeholder="Enter your name"
-          />
-          <InputField
-            title="Phone"
-            value={phone}
-            setValue={setPhone}
-            type="text"
-            placeholder="Enter your Phone number"
-          />
-          <InputField
-            title="Email"
-            value={email}
-            setValue={setEmail}
-            type="text"
-            placeholder="Enter your Email"
-          />
+      <div>
+        <div className="flex items-center gap-4">
+          <div className="w-[90%] grid grid-cols-1 md:grid-clos-2 lg:grid-cols-3 gap-4 ">
+            <InputField
+              title="Name"
+              value={name}
+              setValue={setName}
+              type="text"
+              placeholder="Enter your name"
+            />
+            <InputField
+              title="Phone"
+              value={phone}
+              setValue={setPhone}
+              type="text"
+              placeholder="Enter your Phone number"
+            />
+            <InputField
+              title="Email"
+              value={email}
+              setValue={setEmail}
+              type="text"
+              placeholder="Enter your Email"
+            />
+          </div>
+          <button
+            onClick={handleAddUser}
+            className="w-[10%] p-3 bg-green-400 text-white rounded-md border-none font-bold mt-[35px]"
+          >
+            +Add User
+          </button>
         </div>
-        <button
-          onClick={handleAddUser}
-          className="w-[10%] p-3 bg-green-400 text-white rounded-md border-none font-bold mt-[35px]"
-        >
-          +Add User
-        </button>
+        <textarea
+          placeholder="Enter your Details"
+          className="border-2 border-gray-300 outline-none mt-4 w-full p-3 rounded-md"
+          rows="5"
+          onChange={(e) => seDetails(e.target.value)}
+        />
       </div>
 
       {/* Disply tha all users */}
@@ -139,6 +165,7 @@ function App() {
               phone={user.phone}
               email={user.email}
               handleDelete={handleDelete}
+              handleGetUser={handleGetUser}
               setOpenModal={setOpenModal}
             />
           ))}
@@ -151,6 +178,13 @@ function App() {
             handleUpdate={handleUpdate}
           />
         </div>
+      ) : null}
+
+      {openUserDetailsModal ? (
+        <UserDetailsModal
+          setopenUserDetailsModal={setopenUserDetailsModal}
+          userDetails={userDetails}
+        />
       ) : null}
       <ToastContainer />
     </div>
