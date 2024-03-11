@@ -24,17 +24,16 @@ function App() {
       phone,
     };
 
-    setName("");
-    setEmail("");
-    setPhone("");
-    setAllUsers("");
-
     axios
       .post("http://localhost:5000/createUser", playload)
       .then((response) => {
         console.log(response);
-        toast.success("User Create successfully!");
+        setName("");
+        setEmail("");
+        setPhone("");
+        setAllUsers("");
         handleGetAllUsers();
+        toast.success("User Create successfully!");
       })
       .catch((error) => {
         console.log(error);
@@ -55,12 +54,26 @@ function App() {
 
   // Update a user
   const handleUpdate = () => {
+    console.log("Update");
     try {
     } catch (error) {}
   };
 
   // Delete a user
-  const handleDelete = () => {};
+  const handleDelete = (id) => {
+    try {
+      axios
+        .delete(`http://localhost:5000/deleteUser/${id}`)
+        .then((response) => {
+          console.log("Data deleted:", response.data);
+          handleGetAllUsers();
+          toast.success("User Delete successfully!");
+        })
+        .catch((error) => {
+          console.error("Error deleting data:", error);
+        });
+    } catch (error) {}
+  };
 
   return (
     <div className="max-w-6xl mx-auto">
@@ -107,9 +120,12 @@ function App() {
           allUsers.map((user, i) => (
             <UserCard
               key={i}
+              id={user.id}
               name={user.name}
               phone={user.phone}
               email={user.email}
+              handleDelete={handleDelete}
+              handleUpdate={handleUpdate}
             />
           ))}
       </div>
