@@ -25,7 +25,7 @@ app.get("/getAllUsers", async (req, res) => {
 });
 
 // Get a single user
-app.get("/getAllUsers/:id", async (req, res) => {
+app.get("/getUser/:id", async (req, res) => {
   try {
     const { id } = req.params;
 

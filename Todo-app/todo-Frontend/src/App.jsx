@@ -11,6 +11,7 @@ function App() {
   const [phone, setPhone] = useState("");
   const [allUsers, setAllUsers] = useState([]);
   const [openModal, setOpenModal] = useState(false);
+  const [id, setId] = useState();
 
   // console.log(name, phone, email);
 
@@ -55,10 +56,20 @@ function App() {
   };
 
   // Update a user
-  const handleUpdate = () => {
-    console.log("Update");
+  const handleUpdate = (id, playload) => {
+    console.log("Update", id, playload);
     try {
-    } catch (error) {}
+      axios
+        .put(`http://localhost:5000/updateUser/${id}`, playload)
+        .then((response) => {
+          console.log(response?.data);
+          setOpenModal(false);
+          handleGetAllUsers();
+          toast.success("User Update successfully!");
+        });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // Delete a user
@@ -123,6 +134,7 @@ function App() {
             <UserCard
               key={i}
               id={user.id}
+              setId={setId}
               name={user.name}
               phone={user.phone}
               email={user.email}
@@ -133,7 +145,11 @@ function App() {
       </div>
       {openModal ? (
         <div>
-          <Modal />
+          <Modal
+            id={id}
+            setOpenModal={setOpenModal}
+            handleUpdate={handleUpdate}
+          />
         </div>
       ) : null}
       <ToastContainer />
