@@ -37,6 +37,7 @@ function App() {
           setName("");
           setEmail("");
           setPhone("");
+          seDetails("");
           setAllUsers("");
           handleGetAllUsers();
           toast.success("User Create successfully!");
@@ -69,9 +70,13 @@ function App() {
         .put(`http://localhost:5000/updateUser/${id}`, playload)
         .then((response) => {
           console.log(response?.data);
-          setOpenModal(false);
-          handleGetAllUsers();
-          toast.success("User Update successfully!");
+          if (!response?.data.error) {
+            setOpenModal(false);
+            handleGetAllUsers();
+            toast.success("User Update successfully!");
+          } else {
+            toast.error(response?.data.error);
+          }
         });
     } catch (error) {
       console.log(error);
@@ -96,9 +101,14 @@ function App() {
 
   // get  a single  user
   const handleGetUser = (id) => {
+    if (!id) {
+      toast.error("ID is NOt Working");
+      return;
+    }
     setopenUserDetailsModal(true);
     try {
       axios.get(`http://localhost:5000/getUser/${id}`).then((response) => {
+        console.log(response?.data?.data[0]);
         setUserDetails(response?.data?.data[0]);
       });
     } catch (error) {

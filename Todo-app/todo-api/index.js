@@ -44,7 +44,7 @@ app.post("/createUser", async (req, res) => {
     const { name, email, phone, description } = req.body;
     const id = uuidv4();
 
-    console.log(name, email, phone);
+    // console.log(name, email, phone);
     // Inserting user data in to database
     const newUser = await pool.query(
       "INSERT INTO users VALUES ($1, $2,$3,$4,$5) RETURNING *",
@@ -64,12 +64,14 @@ app.post("/createUser", async (req, res) => {
 app.put("/updateUser/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, email, phone } = req.body;
-    console.log("234234=>", name, email, phone);
+    const { name, email, phone, description } = req.body;
+
+    console.log(69, req.body);
+
     // updating user data in the database
     const updateUser = await pool.query(
-      "UPDATE users SET name=$1, phone=$2, email=$3 WHERE id=$4",
-      [name, phone, email, id]
+      "UPDATE users SET name=$1, phone=$2, email=$3, description=$4 WHERE id=$5",
+      [name, phone, email, description, id]
     );
 
     res.send({

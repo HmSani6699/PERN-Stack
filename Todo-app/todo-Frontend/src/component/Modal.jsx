@@ -1,26 +1,31 @@
 import React, { useEffect, useState } from "react";
 import InputField from "./InputField";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const Modal = ({ id, setOpenModal, handleUpdate }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [details, seDetails] = useState("");
 
   const playload = {
     name,
     email,
     phone,
+    description: details,
   };
 
   useEffect(() => {
     try {
       axios.get(`http://localhost:5000/getUser/${id}`).then((res) => {
         console.log(res?.data?.data[0]);
-        const { name, email, phone } = res?.data?.data[0];
+
+        const { name, email, phone, description } = res?.data?.data[0];
         setName(name);
         setEmail(email);
         setPhone(phone);
+        seDetails(description);
       });
     } catch (error) {
       console.log(error);
@@ -51,6 +56,13 @@ const Modal = ({ id, setOpenModal, handleUpdate }) => {
           setValue={setEmail}
           type="text"
           placeholder="Enter your Email"
+        />
+        <textarea
+          placeholder="Enter your Details"
+          className="border-2 border-gray-300 outline-none mt-4 w-full p-3 rounded-md"
+          rows="5"
+          value={details}
+          onChange={(e) => seDetails(e.target.value)}
         />
         <div className="flex gap-4 justify-end mt-6">
           <button
