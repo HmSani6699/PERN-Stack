@@ -4,11 +4,13 @@ import axios from "axios";
 import UserCard from "./component/UserCard";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Modal from "./component/Modal";
 function App() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [allUsers, setAllUsers] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
 
   // console.log(name, phone, email);
 
@@ -76,7 +78,7 @@ function App() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto">
+    <div className="max-w-6xl mx-auto relative">
       <h1 className="text-4xl font-bold text-center mt-6 mb-10">
         Simple Todo App
       </h1>
@@ -115,7 +117,7 @@ function App() {
 
       {/* Disply tha all users */}
 
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 mt-20">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 mt-20 mb-32">
         {allUsers &&
           allUsers.map((user, i) => (
             <UserCard
@@ -125,10 +127,15 @@ function App() {
               phone={user.phone}
               email={user.email}
               handleDelete={handleDelete}
-              handleUpdate={handleUpdate}
+              setOpenModal={setOpenModal}
             />
           ))}
       </div>
+      {openModal ? (
+        <div>
+          <Modal />
+        </div>
+      ) : null}
       <ToastContainer />
     </div>
   );
