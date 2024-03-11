@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import InputField from "./component/InputField";
 import axios from "axios";
 import UserCard from "./component/UserCard";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function App() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -23,10 +24,16 @@ function App() {
       phone,
     };
 
+    setName("");
+    setEmail("");
+    setPhone("");
+    setAllUsers("");
+
     axios
       .post("http://localhost:5000/createUser", playload)
       .then((response) => {
         console.log(response);
+        toast.success("User Create successfully!");
         handleGetAllUsers();
       })
       .catch((error) => {
@@ -46,7 +53,14 @@ function App() {
     }
   };
 
-  console.log(allUsers);
+  // Update a user
+  const handleUpdate = () => {
+    try {
+    } catch (error) {}
+  };
+
+  // Delete a user
+  const handleDelete = () => {};
 
   return (
     <div className="max-w-6xl mx-auto">
@@ -99,6 +113,7 @@ function App() {
             />
           ))}
       </div>
+      <ToastContainer />
     </div>
   );
 }
