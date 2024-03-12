@@ -158,6 +158,7 @@ function App() {
           placeholder="Enter your Details"
           className="border-2 border-gray-300 outline-none mt-4 w-full p-3 rounded-md"
           rows="5"
+          value={details}
           onChange={(e) => seDetails(e.target.value)}
         />
       </div>

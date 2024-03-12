@@ -44,10 +44,11 @@ app.post("/createUser", async (req, res) => {
     const { name, email, phone, description } = req.body;
     const id = uuidv4();
 
-    // console.log(name, email, phone);
+    console.log(id, req.body);
+
     // Inserting user data in to database
     const newUser = await pool.query(
-      "INSERT INTO users VALUES ($1, $2,$3,$4,$5) RETURNING *",
+      "INSERT INTO users VALUES ($1,$2,$3,$4,$5) RETURNING *",
       [id, name, phone, email, description]
     );
 
