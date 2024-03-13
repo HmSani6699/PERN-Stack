@@ -164,7 +164,6 @@ function App() {
       </div>
 
       {/* Disply tha all users */}
-
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 mt-20 mb-32">
         {allUsers &&
           allUsers.map((user, i) => (

@@ -16,6 +16,7 @@ const Modal = ({ id, setOpenModal, handleUpdate }) => {
     description: details,
   };
 
+  // get a single user
   useEffect(() => {
     try {
       axios.get(`http://localhost:5000/getUser/${id}`).then((res) => {
