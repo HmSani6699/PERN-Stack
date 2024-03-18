@@ -44,3 +44,23 @@ app.get("/getUser/:id", async (req, res) => {
     console.log(error.message);
   }
 });
+
+// UPDATED user
+app.put("/updateUser/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    res.send({ message: "Update single user Successfully!", data: id });
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
+// DELETED user
+app.put("/deleteUser/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    res.send({ message: "Delete single user Successfully!", data: id });
+  } catch (error) {
+    console.log(error.message);
+  }
+});
