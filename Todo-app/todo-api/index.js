@@ -16,6 +16,30 @@ app.post("/createUser", async (req, res) => {
   try {
     const { name, email } = req.body;
     console.log(name, email);
+    res.send({ message: "User crated successfully!" });
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
+// GET all users
+app.get("/getAllUsers", async (req, res) => {
+  try {
+    const getAllUsers = {
+      name: "sadiq",
+      email: "sadi@gmail.com",
+    };
+    res.send({ message: "GET all users Successfully!", data: getAllUsers });
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
+// GET a single  user
+app.get("/getUser/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    res.send({ message: "GET single user Successfully!", data: id });
   } catch (error) {
     console.log(error.message);
   }
