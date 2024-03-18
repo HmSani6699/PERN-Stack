@@ -12,3 +12,11 @@ app.listen(PORT, () => {
 });
 
 // POST a single user
+app.post("/createUser", async (req, res) => {
+  try {
+    const { name, email } = req.body;
+    console.log(name, email);
+  } catch (error) {
+    console.log(error.message);
+  }
+});
