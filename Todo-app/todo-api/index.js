@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const cros = require("cors");
 const PORT = 4000;
+const pool = require("./db");
 
 //  middleweare
 app.use(express.json());
@@ -15,23 +16,43 @@ app.listen(PORT, () => {
 app.post("/createUser", async (req, res) => {
   try {
     const { name, email } = req.body;
-    console.log(name, email);
-    res.send({ message: "User crated successfully!" });
+
+    const getAllUsers = await pool.query("SELECT * FROM users");
+    const filterUser = getAllUsers.rows.find((item) => item?.email === email);
+
+    if (filterUser) {
+      res.send({ message: "user has been already created !" });
+      return;
+    }
+
+    const cretedUser = await pool.query(
+      "INSERT INTO users VALUES ($1,$2) RETURNING *",
+      [name, email]
+    );
+
+    res.send({
+      message: "User crated successfully!",
+      data: cretedUser.rows,
+    });
   } catch (error) {
-    console.log(error.message);
+    res.send({
+      error: error.message,
+    });
   }
 });
 
 // GET all users
 app.get("/getAllUsers", async (req, res) => {
   try {
-    const getAllUsers = {
-      name: "sadiq",
-      email: "sadi@gmail.com",
-    };
-    res.send({ message: "GET all users Successfully!", data: getAllUsers });
+    const getAllUsers = await pool.query("SELECT * FROM users");
+    res.send({
+      message: "GET all users Successfully!",
+      data: getAllUsers.rows,
+    });
   } catch (error) {
-    console.log(error.message);
+    res.send({
+      error: error.message,
+    });
   }
 });
 
