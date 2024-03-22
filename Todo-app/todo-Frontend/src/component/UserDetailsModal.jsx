@@ -10,13 +10,24 @@ const UserDetailsModal = ({ userDetails, setopenUserDetailsModal }) => {
   const urlRegex = /(https?:\/\/[^\s]+)/g;
 
   const renderLinks = (text) => {
-    return text.split(urlRegex).map((part) => {
-      if (part.match(urlRegex)) {
-        return <a href={part}>{part}</a>;
-      } else {
-        return part;
-      }
-    });
+    console.log(typeof text);
+    if (text) {
+      return text.split(urlRegex).map((part) => {
+        if (part.match(urlRegex)) {
+          return (
+            <a
+              style={{ textDecoration: "underline", color: "blue" }}
+              target="_blank"
+              href={part}
+            >
+              {part}
+            </a>
+          );
+        } else {
+          return part;
+        }
+      });
+    }
   };
 
   return (
@@ -41,7 +52,8 @@ const UserDetailsModal = ({ userDetails, setopenUserDetailsModal }) => {
           <p className="text-center">{userDetails?.phone}</p>
           <p className="text-center">{userDetails?.email}</p>
           <h2 className="mt-5 text-[20px] font-semibold">User Details</h2>
-          <p>{userDetails?.description}</p>
+          {/* <p>{userDetails?.description}</p> */}
+          <p>{renderLinks(userDetails?.description)}</p>
         </div>
       </div>
     </div>
