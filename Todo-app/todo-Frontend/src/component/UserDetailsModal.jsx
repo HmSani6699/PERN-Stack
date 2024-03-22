@@ -5,6 +5,20 @@ import { FaUserGraduate } from "react-icons/fa";
 const UserDetailsModal = ({ userDetails, setopenUserDetailsModal }) => {
   console.log(userDetails?.name);
   //   const { name, email, phone, description } = userDetails;
+
+  // Check text
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
+
+  const renderLinks = (text) => {
+    return text.split(urlRegex).map((part) => {
+      if (part.match(urlRegex)) {
+        return <a href={part}>{part}</a>;
+      } else {
+        return part;
+      }
+    });
+  };
+
   return (
     <div className="fixed inset-0 flex justify-center items-center ">
       <div className="absolute inset-0 bg-gray-800 opacity-50"></div>

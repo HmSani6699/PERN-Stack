@@ -75,6 +75,8 @@ app.put("/updateUser/:id", async (req, res) => {
       [name, phone, email, description, id]
     );
 
+    console.log(updateUser);
+
     res.send({
       message: `Update a single user successfully!`,
       data: updateUser.rows,

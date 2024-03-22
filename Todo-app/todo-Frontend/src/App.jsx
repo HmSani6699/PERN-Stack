@@ -30,9 +30,10 @@ function App() {
       description: details,
     };
 
-    try {
-      axios.post("http://localhost:5000/createUser", playload).then((res) => {
-        console.log(res);
+    axios
+      .post("http://localhost:5000/createUser", playload)
+      .then((res) => {
+        console.log(35, res);
         if (!res.data?.error) {
           setName("");
           setEmail("");
@@ -44,10 +45,10 @@ function App() {
         } else {
           toast.error(res?.data?.error);
         }
+      })
+      .catch((error) => {
+        toast.error(error?.response?.data?.message);
       });
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   // Get all users
@@ -115,6 +116,10 @@ function App() {
       console.log(error);
     }
   };
+
+  // useEffect(() => {
+
+  // }, [details]);
 
   return (
     <div className="max-w-6xl mx-auto relative">
