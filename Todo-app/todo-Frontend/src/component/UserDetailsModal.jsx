@@ -52,7 +52,6 @@ const UserDetailsModal = ({ userDetails, setopenUserDetailsModal }) => {
           <p className="text-center">{userDetails?.phone}</p>
           <p className="text-center">{userDetails?.email}</p>
           <h2 className="mt-5 text-[20px] font-semibold">User Details</h2>
-          {/* <p>{userDetails?.description}</p> */}
           <p>{renderLinks(userDetails?.description)}</p>
         </div>
       </div>
