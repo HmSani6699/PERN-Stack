@@ -14,16 +14,11 @@ const Login = () => {
     };
 
     axios
-      .post("http://localhost:5000/createUser", playload)
+      .post("http://localhost:5000/login", playload)
       .then((res) => {
-        console.log(35, res);
         if (!res.data?.error) {
           setName("");
-          setEmail("");
-          setPhone("");
-          seDetails("");
-          setAllUsers("");
-          handleGetAllUsers();
+          setPassword("");
           toast.success("User Create successfully!");
         } else {
           toast.error(res?.data?.error);

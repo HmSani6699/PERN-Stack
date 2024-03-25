@@ -17,7 +17,7 @@ const pool = new Pool({
   user: "postgres",
   port: 5432,
   password: "sani6699p",
-  database: "todo-app",
+  database: "multiRole_DB",
 });
 
 module.exports = pool;

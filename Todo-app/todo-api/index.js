@@ -111,7 +111,6 @@ const app = express();
 const PORT = 5000;
 const cors = require("cors");
 const pool = require("./db");
-const { v4: uuidv4 } = require("uuid");
 
 // using the middleweare
 app.use(cors());
@@ -119,6 +118,94 @@ app.use(express.json());
 
 app.get("/", (req, res) => {
   res.send("Todo Server is running on tha port: http://localhost:5000");
+});
+
+// Register  a user
+app.post("/register", async (req, res) => {
+  try {
+    const { name, email, phone, password } = req.body;
+
+    // check old user
+    const getAllUsers = await pool.query("SELECT * FROM users");
+    const filterUserEmail = getAllUsers.rows.find(
+      (item) => item.email === email
+    );
+    const filterUserNumber = getAllUsers.rows.find(
+      (item) => item.email === phone
+    );
+
+    if (filterUserEmail) {
+      res.status(500).json({
+        message: `Email has been allready used!`,
+      });
+      return;
+    }
+    if (filterUserNumber) {
+      res.status(500).json({
+        message: `Phone has been allready used!`,
+      });
+      return;
+    }
+
+    // Inserting  role
+    const role = "user";
+
+    // Inserting user data in to database
+    const newUser = await pool.query(
+      "INSERT INTO users (name, email, phone, password, role) VALUES ($1, $2, $3, $4, $5) RETURNING *",
+      [name, email, phone, password, role]
+    );
+
+    res.status(200).json({
+      message: `User has been created`,
+      data: newUser.rows,
+    });
+  } catch (error) {
+    res.json({ error: error.message });
+  }
+});
+
+// Login a user
+app.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // check old user
+    const getAllUsers = await pool.query("SELECT * FROM users");
+    const filterUserEmail = getAllUsers.rows.find(
+      (item) => item.email === email
+    );
+    const filterUserPassword = getAllUsers.rows.find(
+      (item) => item.pass === password
+    );
+
+    if (filterUserEmail && filterUserPassword) {
+      res.status(500).json({
+        message: `Email or Phone is Invalid!!`,
+      });
+      return;
+    }
+
+    if (filterUserEmail) {
+      res.status(500).json({
+        message: `Email is Invalid!!`,
+      });
+      return;
+    }
+    if (filterUserPassword) {
+      res.status(500).json({
+        message: `Password is Invalid!!`,
+      });
+      return;
+    }
+
+    res.status(200).json({
+      message: `User has been created`,
+      data: filterUserEmail || filterUserPassword,
+    });
+  } catch (error) {
+    res.json({ error: error.message });
+  }
 });
 
 // Get all user
@@ -141,39 +228,6 @@ app.get("/getUser/:id", async (req, res) => {
     const getUser = await pool.query("SELECT * FROM users WHERE id =$1", [id]);
 
     res.send({ message: `Get a single user`, data: getUser.rows });
-  } catch (error) {
-    res.json({ error: error.message });
-  }
-});
-
-// Post a user
-app.post("/createUser", async (req, res) => {
-  try {
-    const { name, email, phone, description } = req.body;
-    const id = uuidv4();
-
-    const getAllUsers = await pool.query("SELECT * FROM users");
-    const filterUser = getAllUsers.rows.find((item) => item.email === email);
-
-    console.log(filterUser);
-
-    if (filterUser) {
-      res.status(500).json({
-        message: `User has been allready created!`,
-      });
-      return;
-    }
-
-    // Inserting user data in to database
-    const newUser = await pool.query(
-      "INSERT INTO users VALUES ($1,$2,$3,$4,$5) RETURNING *",
-      [id, name, phone, email, description]
-    );
-
-    res.status(200).json({
-      message: `User as created`,
-      data: newUser.rows,
-    });
   } catch (error) {
     res.json({ error: error.message });
   }

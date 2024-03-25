@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import InputField from "../component/InputField";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 const register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   // Added a new user
   const handleAddUser = () => {
@@ -19,24 +22,24 @@ const register = () => {
 
     console.log(20, playload);
 
-    // axios
-    //   .post("http://localhost:5000/register", playload)
-    //   .then((res) => {
-    //     console.log(35, res);
-    //     if (!res.data?.error) {
-    //       setName("");
-    //       setEmail("");
-    //       setPhone("");
-    //       setPassword("");
-
-    //       toast.success("User Create successfully!");
-    //     } else {
-    //       toast.error(res?.data?.error);
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     toast.error(error?.response?.data?.message);
-    //   });
+    axios
+      .post("http://localhost:5000/register", playload)
+      .then((res) => {
+        console.log(35, res);
+        if (!res.data?.error) {
+          setName("");
+          setEmail("");
+          setPhone("");
+          setPassword("");
+          toast.success("User Create successfully!");
+          navigate("/");
+        } else {
+          toast.error(res?.data?.error);
+        }
+      })
+      .catch((error) => {
+        toast.error(error?.response?.data?.message);
+      });
   };
   return (
     <div className="h-[100vh]  flex items-center justify-center mt-[100px] mb-[100px]">
@@ -98,6 +101,7 @@ const register = () => {
           </Link>
         </h2>
       </div>
+      <ToastContainer />
     </div>
   );
 };
