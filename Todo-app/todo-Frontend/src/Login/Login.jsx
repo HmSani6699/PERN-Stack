@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import InputField from "../component/InputField";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   // Added a new user
   const handleAddUser = () => {
@@ -16,16 +19,18 @@ const Login = () => {
     axios
       .post("http://localhost:5000/login", playload)
       .then((res) => {
-        if (!res.data?.error) {
-          setName("");
+        console.log(res?.data.success);
+        if (res?.data.success) {
+          console.log(res?.data?.data);
+          setEmail("");
           setPassword("");
-          toast.success("User Create successfully!");
-        } else {
-          toast.error(res?.data?.error);
+          window.localStorage.setItem("user", JSON.stringify(res?.data?.data));
+          toast.success(res?.data?.message);
+          navigate("/userDashboard");
         }
       })
       .catch((error) => {
-        toast.error(error?.response?.data?.message);
+        toast.error(error?.response?.data?.error);
       });
   };
   return (
@@ -68,6 +73,7 @@ const Login = () => {
           </Link>
         </h2>
       </div>
+      <ToastContainer />
     </div>
   );
 };
