@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import InputField from "../component/InputField";
+import { Link } from "react-router-dom";
 
 const register = () => {
   const [name, setName] = useState("");
@@ -73,10 +74,16 @@ const register = () => {
 
         <button
           onClick={handleAddUser}
-          className="w-full text-[20px] p-3 bg-[#f1690f] text-white rounded-md border-none font-bold mt-[35px]"
+          className="w-full text-[20px] p-3 bg-[#f1690f] text-white rounded-tl-[20px] rounded-br-[20px] border-none font-bold mt-[35px]"
         >
           Sign up
         </button>
+        <h2 className="text-[18px] mt-[15px] text-center">
+          Already have an acount?
+          <Link className="text-[20px] font-[600] text-[#f1690f] ml-1" to="/">
+            Login
+          </Link>
+        </h2>
       </div>
     </div>
   );
