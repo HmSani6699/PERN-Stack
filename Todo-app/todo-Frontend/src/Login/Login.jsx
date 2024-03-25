@@ -36,9 +36,7 @@ const Login = () => {
   return (
     <div className="h-[100vh]  flex items-center justify-center">
       <div className="lg:w-[600px] border-2 border-t-[10px]   border-t-[#f1690f] p-[50px] rounded-[20px]">
-        <h2 className="text-[30px] font-[700] mb-[20px] text-center">
-          Sign Up
-        </h2>
+        <h2 className="text-[30px] font-[700] mb-[20px] text-center">Login</h2>
         <div className="mt-[15px]">
           <InputField
             title="Email"
