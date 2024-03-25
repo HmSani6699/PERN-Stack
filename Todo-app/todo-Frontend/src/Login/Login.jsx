@@ -48,11 +48,11 @@ const Login = () => {
         </div>
         <div className="mt-[15px]">
           <InputField
-            title="Phone"
+            title="Password"
             value={password}
             setValue={setPassword}
             type="text"
-            placeholder="Enter your Password number"
+            placeholder="Enter your Password "
           />
         </div>
 
