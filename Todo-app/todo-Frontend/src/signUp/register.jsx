@@ -37,9 +37,12 @@ const register = () => {
       });
   };
   return (
-    <div>
-      <div className="flex items-center gap-4">
-        <div className="w-[90%] grid grid-cols-1 md:grid-clos-2 lg:grid-cols-3 gap-4 ">
+    <div className="h-[100vh]  flex items-center justify-center">
+      <div className="lg:w-[600px] border-2 border-t-[10px]   border-t-[#f1690f] p-[50px] rounded-[20px]">
+        <h2 className="text-[30px] font-[700] mb-[20px] text-center">
+          Sign Up
+        </h2>
+        <div className="mb-[15px]">
           <InputField
             title="Name"
             value={name}
@@ -47,6 +50,9 @@ const register = () => {
             type="text"
             placeholder="Enter your name"
           />
+        </div>
+
+        <div className="mt-[15px]">
           <InputField
             title="Phone"
             value={phone}
@@ -54,6 +60,8 @@ const register = () => {
             type="text"
             placeholder="Enter your Phone number"
           />
+        </div>
+        <div className="mt-[15px]">
           <InputField
             title="Email"
             value={email}
@@ -62,20 +70,14 @@ const register = () => {
             placeholder="Enter your Email"
           />
         </div>
+
         <button
           onClick={handleAddUser}
-          className="w-[10%] p-3 bg-green-400 text-white rounded-md border-none font-bold mt-[35px]"
+          className="w-full text-[20px] p-3 bg-[#f1690f] text-white rounded-md border-none font-bold mt-[35px]"
         >
-          +Add User
+          Sign up
         </button>
       </div>
-      <textarea
-        placeholder="Enter your Details"
-        className="border-2 border-gray-300 outline-none mt-4 w-full p-3 rounded-md"
-        rows="5"
-        value={details}
-        onChange={(e) => seDetails(e.target.value)}
-      />
     </div>
   );
 };
