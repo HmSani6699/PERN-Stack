@@ -111,6 +111,7 @@ const app = express();
 const PORT = 5000;
 const cors = require("cors");
 const pool = require("./db");
+const bcrypt = require("bcrypt");
 
 // using the middleweare
 app.use(cors());
@@ -124,6 +125,8 @@ app.get("/", (req, res) => {
 app.post("/register", async (req, res) => {
   try {
     const { name, email, phone, password } = req.body;
+
+    const passwordHash = await bcrypt.hash(password);
 
     // check old user
     const getAllUsers = await pool.query("SELECT * FROM users");
