@@ -260,7 +260,7 @@ app.post("/login", async (req, res) => {
     res.status(200).json({
       success: true,
       message: `User Login Successfullu!`,
-      data: checkUserEmail || chcekUserPassword,
+      data: checkUserEmail?.rows[0] || chcekUserPassword?.rows[0],
     });
   } catch (error) {
     res.status(500).json({ error: error.message });

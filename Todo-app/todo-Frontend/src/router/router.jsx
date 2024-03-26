@@ -2,6 +2,8 @@ import { createBrowserRouter } from "react-router-dom";
 import Register from "../signUp/register";
 import Login from "../Login/Login";
 import MainLayout from "../Layout/MainLayout";
+import DashboardLayout from "../Layout/DashboardLayout";
+import CheckUserRole from "../Middleware/CheckUserRole";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +21,16 @@ const router = createBrowserRouter([
       {
         path: "/userDashboard",
         element: <div>Hallo user Dashboard</div>,
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: <DashboardLayout />,
+    children: [
+      {
+        path: "/dashboard",
+        element: <CheckUserRole />,
       },
     ],
   },

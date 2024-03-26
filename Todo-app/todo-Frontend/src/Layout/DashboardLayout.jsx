@@ -1,13 +1,12 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 
-const MainLayout = () => {
+const DashboardLayout = () => {
   return (
     <div>
       <Outlet />
-      {/* <ToastContainer /> */}
     </div>
   );
 };
 
-export default MainLayout;
+export default DashboardLayout;

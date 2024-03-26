@@ -21,12 +21,12 @@ const Login = () => {
       .then((res) => {
         console.log(res?.data.success);
         if (res?.data.success) {
-          console.log(res?.data?.data);
+          // console.log(res?.data?.data);
           setEmail("");
           setPassword("");
           window.localStorage.setItem("user", JSON.stringify(res?.data?.data));
           toast.success(res?.data?.message);
-          navigate("/userDashboard");
+          navigate("/dashboard");
         }
       })
       .catch((error) => {
