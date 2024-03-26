@@ -26,7 +26,15 @@ const Login = () => {
           setPassword("");
           window.localStorage.setItem("user", JSON.stringify(res?.data?.data));
           toast.success(res?.data?.message);
-          navigate("/dashboard");
+
+          // Check role and navigate route
+          if (res?.data?.data?.role === "admin") {
+            console.log("Admin login");
+            navigate("/dashboard");
+          } else {
+            console.log("User Login");
+            navigate("/");
+          }
         }
       })
       .catch((error) => {

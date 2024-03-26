@@ -9,7 +9,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <div>
       <RouterProvider router={router} />
-      <Outlet />
+      {/* <Outlet /> */}
     </div>
   </React.StrictMode>
 );

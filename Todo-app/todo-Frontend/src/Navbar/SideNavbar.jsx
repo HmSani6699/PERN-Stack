@@ -5,7 +5,6 @@ import user_icon from "../assets/images/user_icon.svg";
 const SideNavbar = () => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState([]);
-  const { name, email, phone, role } = userData;
 
   // get user information
   useEffect(() => {
@@ -16,13 +15,36 @@ const SideNavbar = () => {
 
   const logout = () => {
     window.localStorage.removeItem("user");
-    navigate("/login");
+    navigate("/");
   };
 
+  useEffect(() => {}, []);
+
   return (
-    <div className="w-[350px] fixed  min-h-screen border-r-2">
-      {/* user info */}
-      <img src={user_icon} alt="" />
+    <div className="w-[350px] fixed flex  min-h-screen border-r-2">
+      <div className="w-[50px] bg-[#f1690f]"></div>
+
+      <div className="w-full">
+        {/* user info */}
+        <div className="flex items-center justify-center pt-[30px]">
+          <div className="border-2 rounded-full p-[20px]">
+            <img src={user_icon} alt="" />
+          </div>
+        </div>
+        <h2 className="text-[30px] font-[600] text-center mb-[50px]">
+          {userData && userData?.name}
+        </h2>
+
+        {/* Navigate menubar */}
+
+        {/* Logout  */}
+        <div
+          onClick={logout}
+          className="bg-[#f1690f] w-full text-white py-[15px] pl-[15px] text-[18px] font-semibold cursor-pointer"
+        >
+          Log Out
+        </div>
+      </div>
     </div>
   );
 };
