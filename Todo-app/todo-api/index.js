@@ -126,7 +126,7 @@ app.post("/register", async (req, res) => {
   try {
     const { name, email, phone, password } = req.body;
 
-    const passwordHash = await bcrypt.hash(password);
+    // const passwordHash = await bcrypt.hash(password);
 
     // check old user
     const getAllUsers = await pool.query("SELECT * FROM users");
@@ -168,39 +168,89 @@ app.post("/register", async (req, res) => {
   }
 });
 
+// // Login a user
+// app.post("/login", async (req, res) => {
+//   try {
+//     const { email, password } = req.body;
+
+//     console.log(email, password);
+//     // check old user
+//     const getAllUsers = await pool.query("SELECT * FROM users");
+
+//     // console.log(177, getAllUsers.rows);
+
+//     const filterUserEmail = getAllUsers.rows.find(
+//       (item) => item.email === email
+//     );
+
+//     const filterUserPassword = getAllUsers.rows.find(
+//       (item) => item.password === password
+//     );
+
+//     if (!filterUserEmail && !filterUserPassword) {
+//       res.status(500).json({
+//         message: `Email or Phone is Invalid!!`,
+//       });
+//       return;
+//     }
+
+//     if (!filterUserEmail) {
+//       res.status(500).json({
+//         error: `Email is Invalid!!`,
+//       });
+//       return;
+//     }
+//     if (!filterUserPassword) {
+//       res.status(500).json({
+//         error: `Password is Invalid!!`,
+//       });
+//       return;
+//     }
+
+//     res.status(200).json({
+//       success: true,
+//       message: `User Login Successfullu!`,
+//       data: filterUserEmail || filterUserPassword,
+//     });
+//   } catch (error) {
+//     res.json({ error: error.message });
+//   }
+// });
+
 // Login a user
 app.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    console.log(email, password);
     // check old user
-    const getAllUsers = await pool.query("SELECT * FROM users");
-
-    // console.log(177, getAllUsers.rows);
-
-    const filterUserEmail = getAllUsers.rows.find(
-      (item) => item.email === email
+    const checkUserEmail = await pool.query(
+      "SELECT * FROM users WHERE email = $1",
+      [email]
     );
 
-    const filterUserPassword = getAllUsers.rows.find(
-      (item) => item.password === password
+    const chcekUserPassword = await pool.query(
+      "SELECT * FROM users WHERE password = $1",
+      [password]
     );
 
-    if (!filterUserEmail && !filterUserPassword) {
+    if (
+      !checkUserEmail?.rows.length > 0 &&
+      !chcekUserPassword?.rows.length > 0
+    ) {
       res.status(500).json({
-        message: `Email or Phone is Invalid!!`,
+        error: `Email or Phone is Invalid!!`,
       });
       return;
     }
 
-    if (!filterUserEmail) {
+    if (!checkUserEmail?.rows.length > 0) {
       res.status(500).json({
         error: `Email is Invalid!!`,
       });
       return;
     }
-    if (!filterUserPassword) {
+
+    if (!chcekUserPassword?.rows.length > 0) {
       res.status(500).json({
         error: `Password is Invalid!!`,
       });
@@ -210,10 +260,10 @@ app.post("/login", async (req, res) => {
     res.status(200).json({
       success: true,
       message: `User Login Successfullu!`,
-      data: filterUserEmail || filterUserPassword,
+      data: checkUserEmail || chcekUserPassword,
     });
   } catch (error) {
-    res.json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 });
 
