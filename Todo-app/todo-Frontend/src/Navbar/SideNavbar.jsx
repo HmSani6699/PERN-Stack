@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import user_icon from "../assets/images/user_icon.svg";
+import NavLink from "../component/NavLink";
 
 const SideNavbar = () => {
   const navigate = useNavigate();
@@ -36,6 +37,9 @@ const SideNavbar = () => {
         </h2>
 
         {/* Navigate menubar */}
+        <div>
+          <NavLink url={"/login"} title={"Login"} />
+        </div>
 
         {/* Logout  */}
         <div
