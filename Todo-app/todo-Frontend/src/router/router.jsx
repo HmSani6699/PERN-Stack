@@ -32,6 +32,10 @@ const router = createBrowserRouter([
         path: "/dashboard",
         element: <CheckUserRole />,
       },
+      {
+        path: "/dashboard/profile",
+        element: <div>hallo profile</div>,
+      },
     ],
   },
 ]);

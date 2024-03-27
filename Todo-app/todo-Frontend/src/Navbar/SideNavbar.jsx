@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import user_icon from "../assets/images/user_icon.svg";
+import logOut_icon_2 from "../assets/images/logOut_2.svg";
 import NavLink from "../component/NavLink";
 
 const SideNavbar = () => {
@@ -36,14 +37,16 @@ const SideNavbar = () => {
 
         {/* Navigate menubar */}
         <div>
-          <NavLink url={"/login"} title={"Login"} />
+          <NavLink url={"/login"} img={logOut_icon_2} title={"Dashoboard"} />
+          <NavLink url={"/login"} img={logOut_icon_2} title={"Profile"} />
         </div>
 
         {/* Logout  */}
         <div
           onClick={logout}
-          className="hover:bg-[#2f49656b] hover:text-white w-full rounded-lg text-black py-[15px] pl-[15px] text-[18px] font-semibold cursor-pointer"
+          className="hover:bg-[#2f49656b] hover:text-white w-full rounded-lg text-black py-[15px] pl-[15px] text-[18px] font-semibold cursor-pointer flex gap-3 items-center"
         >
+          <img src={logOut_icon_2} alt="" />
           Log Out
         </div>
       </div>
