@@ -1,4 +1,6 @@
-import avatar_icon from "../assets/images/avatar.svg";
+import avatar_icon from "../assets/images/sani.jpg";
+import notification from "../assets/images/notifecation.svg";
+import satting from "../assets/images/satting.svg";
 import SearchInput from "../component/SearchInput";
 
 const DashboardNavbar = ({ user }) => {
@@ -10,10 +12,17 @@ const DashboardNavbar = ({ user }) => {
 
       <div className="flex items-center gap-4">
         <SearchInput placeholder={"Search user"} name={name} />
-        <div className="border-2 rounded-full p-[5px] cursor-pointer relative z-[2]">
-          <img width={40} height={40} src={avatar_icon} alt="avatar img" />
+        <img src={notification} alt="" />
+        <img src={satting} alt="" />
+        <div className="border-2 rounded-full p-[2px] cursor-pointer relative z-[2]">
+          <img
+            className="rounded-full"
+            width={60}
+            height={60}
+            src={avatar_icon}
+            alt="avatar img"
+          />
         </div>
-        <h2 className="whitespace-nowrap text-[25px] font-semibold">{name}</h2>
       </div>
     </div>
   );

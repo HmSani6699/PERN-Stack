@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import user_icon from "../assets/images/user_icon.svg";
-import logOut_icon_2 from "../assets/images/logOut_2.svg";
 import NavLink from "../component/NavLink";
+import { useNavigate } from "react-router-dom";
+import user_icon from "../assets/images/sani.jpg";
+import d_user_icon from "../assets/images/D_user_icon.svg";
+import logOut_icon_2 from "../assets/images/logOut_2.svg";
+import avatar_icon from "../assets/images/avatar.svg";
+import dashboard_icon from "../assets/images/dashboard_2.svg";
 
 const SideNavbar = () => {
   const navigate = useNavigate();
@@ -27,8 +30,8 @@ const SideNavbar = () => {
       <div className="w-full">
         {/* user info */}
         <div className="flex items-center justify-center pt-[30px]">
-          <div className="border-2 rounded-full p-[20px]">
-            <img src={user_icon} alt="" />
+          <div className="border-2 rounded-full p-[10px]">
+            <img className="rounded-full" src={user_icon} alt="" />
           </div>
         </div>
         <h2 className="text-[30px] font-[600] text-center mb-[50px]">
@@ -37,16 +40,24 @@ const SideNavbar = () => {
 
         {/* Navigate menubar */}
         <div>
-          <NavLink url={"/login"} img={logOut_icon_2} title={"Dashoboard"} />
-          <NavLink url={"/login"} img={logOut_icon_2} title={"Profile"} />
+          <NavLink
+            url={"/dashboard"}
+            img={dashboard_icon}
+            title={"Dashoboard"}
+          />
+          <NavLink
+            url={"/dashboard/profile"}
+            img={d_user_icon}
+            title={"Profile"}
+          />
         </div>
 
         {/* Logout  */}
         <div
           onClick={logout}
-          className="hover:bg-[#2f49656b] hover:text-white w-full rounded-lg text-black py-[15px] pl-[15px] text-[18px] font-semibold cursor-pointer flex gap-3 items-center"
+          className="hover:bg-[#2f49656b]  w-full rounded-lg text-black py-[15px] pl-[15px] text-[18px] font-semibold cursor-pointer flex gap-3 items-center"
         >
-          <img src={logOut_icon_2} alt="" />
+          <img className="text-white" src={logOut_icon_2} alt="" />
           Log Out
         </div>
       </div>
