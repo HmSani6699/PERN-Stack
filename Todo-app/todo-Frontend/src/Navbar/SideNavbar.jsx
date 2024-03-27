@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
-import NavLink from "../component/NavLink";
 import { useNavigate } from "react-router-dom";
 import user_icon from "../assets/images/sani.jpg";
-import d_user_icon from "../assets/images/D_user_icon.svg";
 import logOut_icon_2 from "../assets/images/logOut_2.svg";
-import avatar_icon from "../assets/images/avatar.svg";
-import dashboard_icon from "../assets/images/dashboard_2.svg";
+import UserNavLink from "./UserNavLink";
+import AdminNavLink from "./AdminNavLink";
 
 const SideNavbar = () => {
   const navigate = useNavigate();
@@ -23,15 +21,19 @@ const SideNavbar = () => {
     navigate("/");
   };
 
-  useEffect(() => {}, []);
-
   return (
     <div className="w-[300px] fixed bg-white  min-h-screen border-r-2 p-[20px]">
       <div className="w-full">
         {/* user info */}
         <div className="flex items-center justify-center pt-[30px]">
           <div className="border-2 rounded-full p-[10px]">
-            <img className="rounded-full" src={user_icon} alt="" />
+            <img
+              height={150}
+              width={150}
+              className="rounded-full"
+              src={user_icon}
+              alt=""
+            />
           </div>
         </div>
         <h2 className="text-[30px] font-[600] text-center mb-[50px]">
@@ -39,18 +41,11 @@ const SideNavbar = () => {
         </h2>
 
         {/* Navigate menubar */}
-        <div>
-          <NavLink
-            url={"/dashboard"}
-            img={dashboard_icon}
-            title={"Dashoboard"}
-          />
-          <NavLink
-            url={"/dashboard/profile"}
-            img={d_user_icon}
-            title={"Profile"}
-          />
-        </div>
+        {userData?.role === "user" ? (
+          <UserNavLink />
+        ) : userData?.role === "admin" ? (
+          <AdminNavLink />
+        ) : null}
 
         {/* Logout  */}
         <div

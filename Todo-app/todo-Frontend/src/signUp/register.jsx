@@ -43,7 +43,7 @@ const register = () => {
   };
   return (
     <div className="h-[100vh]  flex items-center justify-center mt-[100px] mb-[100px]">
-      <div className="lg:w-[600px] border-2 border-t-[10px]   border-t-[#f1690f] p-[50px] rounded-[20px]">
+      <div className="lg:w-[600px] border-2 border-t-[10px] border-gray-300  border-t-[#f1690f] p-[50px] rounded-[20px]">
         <h2 className="text-[30px] font-[700] mb-[20px] text-center">
           Sign Up
         </h2>
@@ -96,7 +96,10 @@ const register = () => {
         </button>
         <h2 className="text-[18px] mt-[15px] text-center">
           Already have an acount?
-          <Link className="text-[20px] font-[600] text-[#f1690f] ml-1" to="/">
+          <Link
+            className="text-[20px] font-[600] text-[#f1690f] ml-1"
+            to="/login"
+          >
             Login
           </Link>
         </h2>

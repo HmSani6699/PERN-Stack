@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
-import avatar_icon from "../assets/images/avatar.svg";
+import avatar_icon from "../assets/images//sani.jpg";
 import logOut_icon from "../assets/images/logOut.svg";
 import dashboard_icon from "../assets/images/dashboard.svg";
 import { AuthContext } from "../Providers/AuthProvider";
@@ -57,6 +57,7 @@ const Navbar = () => {
                         height={40}
                         src={avatar_icon}
                         alt="avatar img"
+                        className="rounded-full"
                       />
                     </div>
                     {open ? (
