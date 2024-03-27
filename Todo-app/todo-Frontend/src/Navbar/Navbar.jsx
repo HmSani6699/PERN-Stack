@@ -1,18 +1,12 @@
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import avatar_icon from "../assets/images/avatar.svg";
 import logOut_icon from "../assets/images/logOut.svg";
-import { useEffect, useState } from "react";
+import dashboard_icon from "../assets/images/dashboard.svg";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [userData, setUserData] = useState([]);
-
-  // get user information
-  useEffect(() => {
-    const user = JSON.parse(window.localStorage.getItem("user"));
-    console.log(user);
-    setUserData(user);
-  }, []);
 
   const logout = () => {
     window.localStorage.removeItem("user");
@@ -28,37 +22,62 @@ const Navbar = () => {
         <nav className="">
           <ul className="flex items-center gap-[20px] text-white">
             <li>
-              <Link to="/login">Login</Link>
+              <Link className="text-[16px] font-semibold" to="/login">
+                Login
+              </Link>
             </li>
             <li>
-              <Link to="/register">Register</Link>
+              <Link className="text-[16px] font-semibold" to="/register">
+                Register
+              </Link>
             </li>
             {userData && (
               <li>
                 <div className="relative">
                   <div
                     onClick={() => setOpen(!open)}
-                    className="border-2 rounded-full p-[5px]"
+                    className="border-2 rounded-full p-[5px] cursor-pointer relative z-[2]"
                   >
-                    <img src={avatar_icon} alt="avatar img" />
+                    <img
+                      width={40}
+                      height={40}
+                      src={avatar_icon}
+                      alt="avatar img"
+                    />
                   </div>
                   {open ? (
-                    <div className="absolute top-[55px] right-0 bg-[#2f4965] p-[20px] rounded-bl-[10px] rounded-br-[10px] w-[300px]">
+                    <div className="absolute top-[50px] right-0 bg-[#2f4965] p-[30px] rounded-bl-[10px] rounded-br-[10px] w-[300px]">
                       <h2 className="text-center text-[25px]">
                         {userData?.name}
                       </h2>
-                      <hr />
+                      <hr className="my-[17px]" />
                       <Link
-                        className="flex gap-3 text-[16px] font-semibold my-[15px]"
+                        className="flex gap-3 text-[16px] font-semibold "
                         to={logout}
                       >
-                        <img src={logOut_icon} alt="" />
+                        <div className="border-2 rounded-full p-[2px] cursor-pointer">
+                          <img
+                            width={15}
+                            height={15}
+                            src={avatar_icon}
+                            alt=""
+                          />
+                        </div>
+                        Profile
+                      </Link>
+                      <hr className="my-[17px]" />
+                      <Link
+                        className="flex gap-3 text-[16px] font-semibold "
+                        to={logout}
+                      >
+                        <img src={dashboard_icon} alt="" />
                         Dashboard
                       </Link>
-                      <hr />
+                      <hr className="my-[17px]" />
                       <Link
-                        className="flex gap-3 text-[16px] font-semibold mt-[10px]"
-                        to={logout}
+                        className="flex gap-3 text-[16px] font-semibold "
+                        to="/"
+                        onClick={logout}
                       >
                         <img src={logOut_icon} alt="" />
                         Log Out
