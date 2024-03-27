@@ -32,7 +32,7 @@ const register = () => {
           setPhone("");
           setPassword("");
           toast.success("User Create successfully!");
-          navigate("/");
+          navigate("/login");
         } else {
           toast.error(res?.data?.error);
         }
@@ -83,7 +83,7 @@ const register = () => {
             title="Password"
             value={password}
             setValue={setPassword}
-            type="text"
+            type="password"
             placeholder="Enter your Password "
           />
         </div>

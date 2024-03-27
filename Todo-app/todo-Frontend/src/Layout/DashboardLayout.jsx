@@ -6,7 +6,7 @@ const DashboardLayout = () => {
   return (
     <div>
       <SideNavbar />
-      <div className="ml-[350px] bg-green-300">
+      <div className="ml-[300px] bg-green-300">
         <Outlet />
       </div>
     </div>

@@ -20,7 +20,7 @@ const CheckUserRole = () => {
   return (
     <div>
       {userData && userData?.role === "user" ? (
-        <MainLayout data={userData} />
+        <UserDashboard data={userData} />
       ) : userData?.role === "admin" ? (
         <AdminDashoboard data={userData} />
       ) : null}
